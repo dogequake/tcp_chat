@@ -25,7 +25,18 @@ public class ChatClient {
                 try {
                     String response;
                     while ((response = in.readLine()) != null) {
-                        System.out.println(response);
+                        if (response.startsWith("[SYSTEM]")) {
+                            System.out.println("\u001B[34m" + response + "\u001B[0m");
+                        }
+                        else if (response.startsWith("[ADMIN]")) {
+                            System.out.println("\u001B[31m" + response + "\u001B[0m");
+                        }
+                        else if (response.startsWith("[ЛИЧНО]")) {
+                            System.out.println("\u001B[35m" + response + "\u001B[0m");
+                        }
+                        else {
+                            System.out.println(response);
+                        }
                     }
                 } catch (IOException e) {
                     System.out.println("Отключен от сервера");

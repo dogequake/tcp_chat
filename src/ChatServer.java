@@ -8,6 +8,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 public class ChatServer {
 
     public static List<ClientHandler> clients = new CopyOnWriteArrayList<>();
+    public static List<String> messageHistory = new CopyOnWriteArrayList<>();
 
     public static void main(String[] args) {
         int port = 5000;
@@ -20,7 +21,6 @@ public class ChatServer {
                 System.out.println("Новый пользователь подключился");
 
                 ClientHandler client = new ClientHandler(clientSocket);
-                clients.add(client);
                 client.start();
             }
 
@@ -62,5 +62,15 @@ public class ChatServer {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public static boolean nicknameExists(String nickname) {
+        for (ClientHandler client : clients) {
+            if (client.getNickname() != null &&
+                    client.getNickname().equalsIgnoreCase(nickname)) {
+                return true;
+            }
+        }
+        return false;
     }
 }
